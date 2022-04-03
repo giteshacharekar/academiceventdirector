@@ -1,0 +1,1 @@
+web: gunicorn academiceventdirector.wsgi:application --log-file -
