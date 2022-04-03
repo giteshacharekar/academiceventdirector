@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block title %} events {% endblock title %}
+
+{% block eventactive %} active {% endblock eventactive %}
+{% block body %}
+{% load humanize %}
+{% load extras %}
+<div class="container my-3">
+  <div class="row">
+    <div class="col s8">
+      <h2>Events from different departments:</h2>
+    </div>
+    <div class="col s4">
+      <ul class="list-group" style="float:right">
+        <li class="nav-item dropdown list-group-item ">
+          <a class="nav-link dropdown-toggle " style="font-size: 20px; color: black; font-weight:bolder;" href="#"
+            id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            departments/event Type
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/events">All</a>
+            <a class="dropdown-item" href="/events?filter=library">Library</a>
+            <a class="dropdown-item" href="/events?filter=gymkhana">Gymkhana</a>
+            <a class="dropdown-item" href="/events?filter=office">Office</a>
+            <a class="dropdown-item" href="/events?filter=convocation">convocation</a>
+            <a class="dropdown-item" href="/events?filter=Student">Student</a>
+            <a class="dropdown-item" href="/events?filter=Teacher">Teacher</a>
+            <a class="dropdown-item" href="/events?filter=Other">Other</a>
+            
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+
+    function addlike(srno) {
+
+
+      var entry = {
+        srno: srno
+      };
+
+      console.log(entry);
+
+
+
+      let csrftoken = getCookie('csrftoken')
+      fetch(`${window.origin}/likepost`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(entry),
+        cache: "no-cache",
+        headers: new Headers({
+          "content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        })
+      })
+        .then(function (response) {
+
+          response.json().then(function (data) {
+            console.log(data);
+            if (!data.error) {
+
+              document.getElementById("likesof" + srno).innerHTML = data.totallikes;
+
+            }
+            else {
+              alert(data.error)
+            }
+
+          })
+        })
+
+    }
+
+    function deletepost(srno) {
+      //document.getElementById("delete"+srno).style.display="none"
+      c = confirm("do you want to delete post?")
+      if (c) {
+
+
+
+
+        var entry = {
+          srno: srno
+        };
+
+        console.log(entry);
+
+
+
+        let csrftoken = getCookie('csrftoken')
+        fetch(`${window.origin}/deletepost`, {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(entry),
+          cache: "no-cache",
+          headers: new Headers({
+            "content-type": "application/json",
+            "X-CSRFToken": csrftoken,
+          })
+        })
+          .then(function (response) {
+
+            response.json().then(function (data) {
+              console.log(data);
+              if (data.msg) {
+
+                document.getElementById("delete" + srno).style.display = "none"
+
+
+              }
+
+
+            })
+          })
+      }
+    }
+
+
+
+  </script>
+  {% if allPosts|length == 0 %}
+  <center><img style="margin-top: 150px;" src="https://img.icons8.com/cute-clipart/200/000000/nothing-found.png" />
+  </center>
+  {% endif %}
+  {% for post in allPosts %}
+
+
+  <div id="delete{{ post.sno }}" style="background-color: rgb(231, 253, 253)!important;"
+    class="shadow p-3 mb-5  rounded row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+      <h4 class="mb-0 d-inline-block mb-3 ">Event by <span
+          onclick="window.open('/profile/{{post.author}}')">{{post.author}}</span> / dept:"{{post.eventtype}}" </h4>
+      <div class="row">
+
+        <div class="col s6"><img src='{{ post.eventimage }}' style='width:100%;height:100%'></div>
+        <div class="col s6">
+          <h1 class="mb-0">"{{post.title}}" </h1>
+          <div class="mb-1 text-muted">{{post.timeStamp}}</div>
+          <h5>Discription of event:</h5>
+          <p class="card-text mb-auto">{{post.content| truncatechars:500 }}</p>
+          <h5>TEAM MEMBERS:</h5>
+          <p class="card-text mb-auto">{{post.tools| truncatechars:500 }}</p>
+          <div class="my-2">
+            <a href="/events/{{post.slug}}" role="button" class="btn btn-primary ">view event / comment</a>
+            {% if user.is_authenticated %}
+            <a onclick="addlike({{ post.sno }})" id="post{{ post.sno }}">
+              <img src="https://img.icons8.com/fluent/48/000000/facebook-like.png" />
+            </a>
+            {% endif %}
+          </div>
+          <h4> {{post.views}} views <span id="likesof{{ post.sno }}">{{post.totallikes}}</span> likes<h4>
+              {% if user.is_authenticated and userid == post.author %}
+              <a onclick="deletepost({{ post.sno }})">
+                <img src="https://img.icons8.com/color/48/000000/delete-forever.png" />
+              </a>
+              {% endif %}
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-auto d-none d-lg-block">
+
+    </div>
+  </div>
+
+
+  {% endfor %}
+</div>
+{% endblock body %}
+kks

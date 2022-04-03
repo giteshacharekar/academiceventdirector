@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} Search Results {% endblock title %}
+
+{% block blogactive %} active {% endblock blogactive %}
+{% block body %} 
+{% load humanize %}
+{% load extras %}
+<div class="container my-3">
+    <h2>Search results:</h2>
+    {% if allPosts|length < 1 %}
+    <p>No search results</p>
+
+    Your search query: <b>{{query}} </b> did not match any documents. <br>
+    Suggestions:  
+    <ul>
+    <li>Make sure that all words are spelled correctly.</li>
+    <li>Try different keywords.</li>
+    <li>Try more general keywords.</li>
+    <li>Try fewer keywords.</li>
+    </ul>
+    {% endif %}
+    {% for post in allPosts %}
+    
+    <div class="shadow p-3 mb-5 bg-white rounded row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h3 class="mb-0 d-inline-block mb-3 ">Event handled by "{{post.author}}" </h3>
+            <div class="row">
+ 
+                <div class="col s6"><img src='{{ post.eventimage }}' style='width:100%;height:100%'></div>
+                <div class="col s6">
+                     <h1 class="mb-0">{{post.title}}</h1>
+                    <div class="mb-1 text-muted">{{post.timeStamp}}</div>
+                     <h5>Discription:</h5>
+                    <p class="card-text mb-auto">{{post.content| truncatechars:500 }}</p>
+                     <h5>Tools:</h5>
+                    <p class="card-text mb-auto">{{post.tools| truncatechars:500 }}</p>
+                    <div class="my-2">
+                    <a href="/events/{{post.slug}}" role="button" class="btn btn-primary ">view post</a>
+                    <img src="https://img.icons8.com/fluent/48/000000/facebook-like.png"/>
+                    
+                    </div>
+                   <h4> {{post.views}} views<h4>
+                </div>
+            </div>
+            
+           
+        </div>
+        <div class="col-auto d-none d-lg-block">
+
+        </div>
+    </div> 
+
+
+    {% endfor %}
+</div>
+{% endblock body %}

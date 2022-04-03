@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+{% block homeactive %} active {% endblock homeactive %}
+
+{% block body %}
+<div class="container my-3" >
+    <div class="jumbotron" style="background-color: rgb(252, 135, 217)!important;">
+       <b> <h1 class="display-4">Welcome to Academic Direction!</h1></b>
+        <p class="lead">A simple platform for students, teachers and all other academic members to manage events.</p>
+        <hr class="my-4">
+        <p>participate in events from different departemnts and also oraganise your own events.</p>
+        <a class="btn btn-primary btn-lg" href="/events" role="button">Go to Events</a>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="jumbotron" style="background-color: rgb(133, 247, 218)!important;">
+        <h1 class="display-4">gymkhana</h1>
+        <p class="lead"></p>
+        <hr class="my-4">
+        <p>Explore differnt events from gymkhana and enroll with just one click.</p>
+        <a class="btn btn-primary btn-lg" href="/events/?filter=gymkhana" role="button">Go to Gymkhana events</a>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="jumbotron" style="background-color: rgb(186, 199, 253)!important;">
+        <h1 class="display-4">Office!</h1>
+        <p class="lead">Nmitd office has the most well deciplined and student friendly environment. To register/enroll from various activities from office departement kindly press the thumbsup button to enroll/register for the activity.</p>
+        <hr class="my-4">
+        <p>Alerts and events from Office departement. </p>
+        <a class="btn btn-primary btn-lg" href="/events/?filter=office" role="button">Go to Office events</a>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="jumbotron" style="background-color: rgb(252, 203, 252)!important;">
+        <h1 class="display-4">Library</h1>
+        <p class="lead">Navinchandra Mehta Institute of Technology (NMITD) Library is one of the largest tangible treasures of knowledge for the study material resources. NMITD Library resources are an amalgamation of number of study material formats. As on date it has a collection of about 7500 books, 62 National and International journals/magazines and 250 non-printed material and online databases organized into different viable branches (MMS & MCA). It was intended that it should be a library of reference, a working place for students and repository of material for the future historians of the society </p>
+        <hr class="my-4">
+        <p>enrollemnet, registration and queries related to libraries.</p>
+        <a class="btn btn-primary btn-lg" href="/events/?filter=library" role="button">Go to library events</a>
+    </div>
+</div>
+
+
+{% endblock body %}
