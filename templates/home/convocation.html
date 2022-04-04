@@ -16,6 +16,7 @@
   <h2>Time: 3pm onwards</h2>
 </center><br>
 <hr style="height:3px;border-width:0;color:gray;background-color:gray"><br>
+<h3>Please enter your details. </h3>
   <form method="post" action="/convocation">
     {% csrf_token %}
     <div class="form-group shadow p-3 mb-3 bg-white rounded row no-gutters border rounded overflow-hidden" style="background-color: rgb(255, 255, 255)!important">
@@ -32,7 +33,7 @@
       </select>
     </div>
     <div class="form-group shadow p-3 mb-3 bg-white rounded row no-gutters border rounded overflow-hidden" style="background-color: rgb(255, 255, 255)!important">
-     <h5><label for="content">Please enter your occupation and company name with address</label></h5>
+     <h5><label for="content">Please enter your occupation and company name with address.</label></h5>
       <textarea class="form-control" name="currentwork" id="currentwork" cols="30" rows="5"></textarea>
     </div>
     <div class="form-group shadow p-3 mb-3 bg-white rounded row no-gutters border rounded overflow-hidden" style="background-color: rgb(255, 255, 255)!important">
