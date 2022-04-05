@@ -26,7 +26,7 @@ SECRET_KEY = '2ej@47nmk2$91g4y!d(73*y$_tq2eqv*+!#jwt#468*e#g&mo$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['academicdirector.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 
@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['academicdirector.herokuapp.com']
 INSTALLED_APPS = [
     
     'django.contrib.humanize',
-    'corsheaders',
+   
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'events.apps.EventsConfig',
+    'import_export',
+    
+    
 ]
 
 MIDDLEWARE = [
